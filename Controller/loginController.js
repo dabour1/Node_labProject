@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 exports.login = async (req, res, next) => {
-  // console.log(req.body.password);
+
   let user = await teacherSchema.findOne({
     email: req.body.email,
 

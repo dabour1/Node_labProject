@@ -16,7 +16,7 @@ exports.insertValidator = [
   body("password").isString()
     .withMessage("teacher password should be string")
     .isLength({ min: 5 })
-    .withMessage(" teacher fullname lenght>5"),
+    .withMessage(" teacher password lenght>5"),
   body("email").isEmail()
     .withMessage("invalid mail").custom(async (value) => {
       const adminObjects = await adminSchema.find({ email: value });

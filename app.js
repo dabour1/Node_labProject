@@ -8,6 +8,7 @@ const childRouter = require("./Routes/childRouter");
 const classRouter = require("./Routes/classRouter");
 const loginRoute = require("./Routes/logInRouter");
 const adminRouter = require("./Routes/adminRouter");
+const changePasswordRouter = require("./Routes/changePasswordRouter");
 const authenticationMW = require("./Midelwares/authenticationMW");
 
 const server = express();
@@ -30,13 +31,14 @@ server.use(cors());
 server.use(express.json());
 
 server.use(loginRoute);
-
+server.use(changePasswordRouter);
 server.use(authenticationMW);
 
 server.use(teacherRoute);
 server.use(childRouter);
 server.use(classRouter);
 server.use(adminRouter);
+
 
 
 server.use((request, response) => {
