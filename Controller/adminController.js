@@ -1,5 +1,6 @@
 const adminSchema = require("./../Model/adminSchema");
 const bcrypt = require('bcrypt');
+const multer = require("multer");
 
 
 exports.getAllAdmins = (req, res, next) => {
@@ -19,6 +20,8 @@ exports.insertAdmin = async (req, res, next) => {
       res.status(200).json({ data });
     })
     .catch((error) => next(error));
+
+
 };
 
 exports.updateAdmin = (req, res, next) => {
