@@ -1,7 +1,7 @@
 
 const teacherSchema = require("./../Model/teacherSchema");
 const bcrypt = require('bcrypt');
-
+const addImageToDataBase = require("./addImageToDataBase");
 
 exports.getAllTeachers = (req, res, next) => {
 
@@ -21,6 +21,9 @@ exports.getTeacherById = (req, res, next) => {
 };
 
 exports.insertTeacher = async (req, res, next) => {
+
+  req.body.image = addImageToDataBase(req.file.filename);
+
   req.body.password = await bcrypt.hash(req.body.password, 10)
   let object = new teacherSchema(req.body);
   object
@@ -32,7 +35,10 @@ exports.insertTeacher = async (req, res, next) => {
 };
 
 exports.updateTeacher = (req, res, next) => {
-  ClassSchema.findByIdAndUpdate(req.body._id, req.body, { new: true }).then(data => {
+  if (req.file) {
+    req.body.image = addImageToDataBase(req.file.filename);
+  }
+  teacherSchema.findByIdAndUpdate(req.body._id, req.body, { new: true }).then(data => {
     res.status(200).json({ message: 'updated', data })
   })
     .catch(error => {
@@ -40,7 +46,7 @@ exports.updateTeacher = (req, res, next) => {
     })
 };
 exports.deleteTeacherById = (req, res, next) => {
-  ClassSchema.findByIdAndDelete(req.params._id).then(data => {
+  teacherSchema.findByIdAndDelete(req.params._id).then(data => {
     res.status(200).json({ message: 'deleted', data })
   })
     .catch(error => next(error))
