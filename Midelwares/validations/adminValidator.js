@@ -28,9 +28,6 @@ exports.insertValidator = [
       return true;
     }),
 
-  // body("image").isString()
-  //   .withMessage("invalid mail").withMessage("admin image should be string"),
-
 ];
 
 exports.updateValidator = [
@@ -62,8 +59,6 @@ exports.updateValidator = [
       return true;
     }),
 
-  body("image").isString().optional()
-    .withMessage("invalid mail").withMessage("admin image should be string"),
 
 
 ];
