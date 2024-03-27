@@ -12,7 +12,8 @@ exports.getAllAdmins = (req, res, next) => {
 
 };
 exports.insertAdmin = async (req, res, next) => {
-  req.body.password = await bcrypt.hash(req.body.password, 10)
+  req.body.password = await bcrypt.hash(req.body.password, 10);
+  req.body.image = `${req.file.filename}`;
   let object = new adminSchema(req.body);
   object
     .save()

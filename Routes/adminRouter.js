@@ -7,12 +7,13 @@ const {
 
 } = require("./../Midelwares/validations/adminValidator");
 const validatonResult = require("../Midelwares/validations/validatorResult");
+const upload = require('../Controller/upload');
 const router = express.Router();
 router
   .route("/admins")
   .get(isAdmin, controller.getAllAdmins)
-  .post(isAdmin, insertValidator, validatonResult, controller.insertAdmin)
-  .patch(isAdmin, updateValidator, validatonResult, controller.updateAdmin);
+  .post(isAdmin, upload.single("user"), insertValidator, validatonResult, controller.insertAdmin)
+  .patch(isAdmin, upload.single("user"), updateValidator, validatonResult, controller.updateAdmin);
 
 
 module.exports = router;

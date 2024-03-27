@@ -6,7 +6,7 @@ const teacherSchema = require("./../../Model/teacherSchema");
 exports.insertValidator = [
   body("_id")
     .isInt()
-    .withMessage("admin id should be int"),
+    .withMessage("admin _id should be int"),
   body("fullname")
     .isAlpha()
     .withMessage("admin fullname should be string")
@@ -28,8 +28,8 @@ exports.insertValidator = [
       return true;
     }),
 
-  body("image").isString()
-    .withMessage("invalid mail").withMessage("admin image should be string"),
+  // body("image").isString()
+  //   .withMessage("invalid mail").withMessage("admin image should be string"),
 
 ];
 
