@@ -14,8 +14,8 @@ const upload = require('../Controller/upload');
 router
   .route("/child")
   .get(isAuthorizatied, controller.getAllChilds)
-  .post(isAdmin, insertValidator, validatonResult, upload.single("user"), controller.insertChild)
-  .patch(isAdmin, updateValidator, validatonResult, upload.single("user"), controller.updateChild);
+  .post(isAdmin, upload.single("child"), insertValidator, validatonResult, controller.insertChild)
+  .patch(isAdmin, upload.single("child"), updateValidator, validatonResult, controller.updateChild);
 router
   .route("/child/:_id")
   .get(isAuthorizatied, deleteGetOneValidator, validatonResult, controller.getChildById)

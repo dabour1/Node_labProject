@@ -12,8 +12,8 @@ const router = express.Router();
 router
   .route("/admins")
   .get(isAdmin, controller.getAllAdmins)
-  .post(isAdmin, insertValidator, validatonResult, upload.single("user"), controller.insertAdmin)
-  .patch(isAdmin, updateValidator, validatonResult, upload.single("user"), controller.updateAdmin);
+  .post(isAdmin, upload.single("admin"), insertValidator, validatonResult, controller.insertAdmin)
+  .patch(isAdmin, upload.single("admin"), updateValidator, validatonResult, controller.updateAdmin);
 
 
 module.exports = router;

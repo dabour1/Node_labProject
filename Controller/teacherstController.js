@@ -1,8 +1,9 @@
 
 const teacherSchema = require("./../Model/teacherSchema");
 const bcrypt = require('bcrypt');
-const addImageToDataBase = require("./addImageToDataBase");
-
+const addImageToDataBase = require("./addImagesjs");
+const addImage = require("./addImagesjs");
+const _path = require('path')
 exports.getAllTeachers = (req, res, next) => {
 
   teacherSchema.find()
@@ -29,17 +30,17 @@ exports.insertTeacher = async (req, res, next) => {
   object
     .save()
     .then((data) => {
-      res.status(200).json({ data });
+      addImage.addImageToFolder(req.file, "teachers", "insert", data, res)
     })
     .catch((error) => next(error));
 };
 
 exports.updateTeacher = (req, res, next) => {
   if (req.file) {
-    req.body.image = addImageToDataBase(req.file.filename);
+    req.body.image = `${req.file.fieldname}_${req.body._id}_${_path.extname(req.file.originalname)}`;
   }
   teacherSchema.findByIdAndUpdate(req.body._id, req.body, { new: true }).then(data => {
-    res.status(200).json({ message: 'updated', data })
+    addImage.addImageToFolder(req.file, "teachers", "Update", data, res)
   })
     .catch(error => {
       next(error)

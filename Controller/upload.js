@@ -1,13 +1,21 @@
 const multer = require('multer');
-const _path = require('path')
-const storageEngine = multer.diskStorage({
-    destination: "./images",
-    filename: (req, file, cb) => {
-        return cb(null, `${file.filename}_${Date.now()}_${_path.extname(file.originalname)}`)
-    },
-});
 
-module.exports = multer({
-    storage: storageEngine,
-    limits: { fileSize: 1000000 },
-});
+const multerStorage = multer.memoryStorage();
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith("image")) {
+        cb(null, true);
+    } else {
+        cb(new Error("Can upload images only"), false);
+    }
+};
+const upload = multer(
+    {
+        storage: multerStorage,
+        limits: { fileSize: 1000000 },
+        fileFilter: multerFilter
+    });
+module.exports = upload;
+
+
+
+

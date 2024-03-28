@@ -1,0 +1,19 @@
+const _path = require('path')
+const fs = require('fs');
+
+exports.addImageToDataBase = (file, _id) => {
+  if (file) { return `${file.fieldname}_${_id}_${_path.extname(file.originalname)}`; }
+  else {
+    return `empty`;
+  }
+}
+
+exports.addImageToFolder = (file, roll, proccces, data, res) => {
+  fs.writeFile
+    (`images/${roll}/${file.fieldname}_${data._id}_${_path.extname(file.originalname)}`, file.buffer, err => {
+      if (err) { next(Error("Can't save your photo")); }
+      else { res.status(200).json({ message: `${proccces}ed`, data }) }
+    }
+    )
+
+}

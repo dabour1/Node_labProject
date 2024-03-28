@@ -20,7 +20,6 @@ exports.insertValidator = [
     .withMessage("invalid mail").custom(async (value) => {
       const adminObjects = await adminSchema.find({ email: value });
       const teacherObjects = await teacherSchema.find({ email: value });
-
       if (adminObjects.length > 0 || teacherObjects.length > 0) {
         return Promise.reject("Email already exists");
       }
@@ -48,11 +47,11 @@ exports.updateValidator = [
     .isEmail()
     .optional()
     .withMessage("invalid email")
-    .custom(async (value) => {
-      const adminObjects = await adminSchema.find({ email: value });
-      const teacherSchema = await sellerSchema.find({ email: value });
-
-      if (adminObjects.length > 0 || teacherSchema.length > 0) {
+    .custom(async (value, { req }) => {
+      const adminObject = await adminSchema.findOne({ email: value }, { email: 1, _id: 0 });
+      const teacherObject = await teacherSchema.find({ email: value });
+      const currntMile = await adminSchema.findOne({ _id: req.body._id }, { email: 1, _id: 0 });
+      if ((adminObject && adminObject.email != currntMile.email) || teacherObject.length > 0) {
         return Promise.reject("Email already exists");
       }
 

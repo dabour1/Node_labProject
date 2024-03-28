@@ -18,11 +18,11 @@ exports.insertValidator = [
     .isLength({ min: 5 })
     .withMessage(" teacher password lenght>5"),
   body("email").isEmail()
-    .withMessage("invalid mail").custom(async (value) => {
-      const adminObjects = await adminSchema.find({ email: value });
-      const teacherObjects = await teacherSchema.find({ email: value });
-
-      if (adminObjects.length > 0 || teacherObjects.length > 0) {
+    .withMessage("invalid mail").custom(async (value, { req }) => {
+      const adminObject = await adminSchema.findOne({ email: value }, { email: 1, _id: 0 });
+      const teacherObject = await teacherSchema.findOne({ email: value }, { email: 1, _id: 0 });
+      const currntMile = await teacherSchema.findOne({ _id: req.body._id }, { email: 1, _id: 0 });
+      if ((teacherObject && teacherObject.email != currntMile.email) || adminObject) {
         return Promise.reject("Email already exists");
       }
 
