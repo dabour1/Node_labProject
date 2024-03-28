@@ -22,9 +22,7 @@ exports.getChildById = (req, res, next) => {
 };
 
 exports.insertChild = (req, res, next) => {
-  if (req.file) {
-    req.body.image = `${req.file.fieldname}_${req.body._id}_${_path.extname(req.file.originalname)}`;
-  }
+  req.body.image = addImage.addImageToDataBase(req.file, req.body._id);
 
   let object = new childSchema(req.body);
   object
@@ -37,7 +35,7 @@ exports.insertChild = (req, res, next) => {
 
 exports.updateChild = (req, res, next) => {
   if (req.file) {
-    req.body.image = addImageToDataBase(req.file.filename);
+    req.body.image = `${req.file.fieldname}_${req.body._id}_${_path.extname(req.file.originalname)}`;
   }
   childSchema.findByIdAndUpdate(req.body._id, req.body, { new: true }).then(data => {
     addImage.addImageToFolder(req.file, "children", "Update", data, res)

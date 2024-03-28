@@ -23,7 +23,7 @@ exports.getTeacherById = (req, res, next) => {
 
 exports.insertTeacher = async (req, res, next) => {
 
-  req.body.image = addImageToDataBase(req.file.filename);
+  req.body.image = addImage.addImageToDataBase(req.file, req.body._id);
 
   req.body.password = await bcrypt.hash(req.body.password, 10)
   let object = new teacherSchema(req.body);

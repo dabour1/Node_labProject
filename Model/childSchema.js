@@ -6,7 +6,8 @@ const schema = new mongoose.Schema({
   fullname: { type: String, unique: true },
   age: { type: Number },
   level: { type: String },
-  address: addressSchema
+  address: addressSchema,
+  image: { type: String }
 });
 
 module.exports = mongoose.model("childrens", schema);

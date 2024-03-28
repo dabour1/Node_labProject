@@ -66,7 +66,7 @@ exports.getTeacherById = (req, res, next) => {
 
 exports.getSupervisors = (req, res, next) => {
 
-  ClassSchema.find({}).populate({ path: "supervisor", select: { fullname: 1 } })
+  ClassSchema.find({}, { children: 0, _id: 0, __v: 0 }).populate({ path: "supervisor", select: { fullname: 1 } })
     .then(data => {
       res.status(200).json({ data: data });
     })
