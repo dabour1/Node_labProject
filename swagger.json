@@ -1,0 +1,835 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Nursery System Application API",
+        "description": "API documentation for Nursery System Application"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/admins": {
+            "get": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Get all admins",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Admin"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Create a new admin",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "adminImage",
+                        "in": "formData",
+                        "description": "Admin image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "adminData",
+                        "in": "body",
+                        "required": true,
+                        "description": "admindata",
+                        "schema": {
+                            "$ref": "#/definitions/insertAdmin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "inserted",
+                        "schema": {
+                            "$ref": "#/definitions/Admin"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Admins"
+                ],
+                "summary": "Update an admin",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "admin",
+                        "in": "formData",
+                        "description": "Updated admin data",
+                        "type": "file"
+                    },
+                    {
+                        "name": "adminData",
+                        "in": "body",
+                        "description": "admindata",
+                        "schema": {
+                            "$ref": "#/definitions/updateAdmin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "schema": {
+                            "$ref": "#/definitions/Admin"
+                        }
+                    }
+                }
+            }
+        },
+        "/teachers": {
+            "get": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Get all teachers",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Teacher"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Create a new teacher",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher",
+                        "in": "formData",
+                        "description": "Teacher data",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "teacherData",
+                        "in": "body",
+                        "required": true,
+                        "description": "teacherData",
+                        "schema": {
+                            "$ref": "#/definitions/insertTeacher"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Teacher created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Teacher"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Update a teacher",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "teacher",
+                        "in": "formData",
+                        "description": "Updated teacher data",
+                        "type": "file"
+                    },
+                    {
+                        "name": "teacherData",
+                        "in": "body",
+                        "description": "teacherData",
+                        "schema": {
+                            "$ref": "#/definitions/updateTeacher"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Teacher updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Teacher"
+                        }
+                    }
+                }
+            }
+        },
+        "/teachers/supervisors": {
+            "get": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Get all supervisors",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/teachers/{_id}": {
+            "get": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Get teacher by ID",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the teacher",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Teacher"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Teachers"
+                ],
+                "summary": "Delete teacher by ID",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the teacher",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Teacher"
+                        }
+                    }
+                }
+            }
+        },
+        "/child": {
+            "get": {
+                "tags": [
+                    "Children"
+                ],
+                "summary": "Get all children",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Child"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Children"
+                ],
+                "summary": "Create a new child",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "child",
+                        "in": "formData",
+                        "description": "Child data",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Child created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Child"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Children"
+                ],
+                "summary": "Update a child",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "child",
+                        "in": "formData",
+                        "description": "Updated child data",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Child updated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Child"
+                        }
+                    }
+                }
+            }
+        },
+        "/child/{_id}": {
+            "get": {
+                "tags": [
+                    "Children"
+                ],
+                "summary": "Get child by ID",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the child",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Child"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Children"
+                ],
+                "summary": "Delete child by ID",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the child",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Child deleted successfully"
+                    }
+                }
+            }
+        },
+        "/class": {
+            "get": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Get all classes",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/class"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Create a new class",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "classData",
+                        "in": "body",
+                        "description": "Class data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/insert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "inserted",
+                        "schema": {
+                            "$ref": "#/definitions/class"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Update a class",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "classData",
+                        "in": "body",
+                        "description": "Updated class data",
+                        "schema": {
+                            "$ref": "#/definitions/update"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "schema": {
+                            "$ref": "#/definitions/class"
+                        }
+                    }
+                }
+            }
+        },
+        "/class/{_id}": {
+            "get": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Get class by ID",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the class",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/class"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Delete class by ID",
+                "security": [
+                    {
+                        "isAdmin": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the class",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "deleted",
+                        "schema": {
+                            "$ref": "#/definitions/class"
+                        }
+                    }
+                }
+            }
+        },
+        "/class/child/{_id}": {
+            "get": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Get children info of a class",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the class",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/class/teacher/{_id}": {
+            "get": {
+                "tags": [
+                    "Classes"
+                ],
+                "summary": "Get supervisor info of a class",
+                "security": [
+                    {
+                        "isAuthorized": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "path",
+                        "description": "ID of the class",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Admin": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateAdmin": {
+            "type": "object",
+            "required": [
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "updateTeacher": {
+            "type": "object",
+            "required": [
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "mongoObjectId"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "Teacher": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "mongoObjectId"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "insertAdmin": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "insertTeacher": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "mongoObjectId"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "Child": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "address": {
+                    "$ref": "#/definitions/Address"
+                },
+                "image": {
+                    "type": "string"
+                }
+            }
+        },
+        "Address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "building": {
+                    "type": "integer"
+                }
+            }
+        },
+        "insert": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "mongoObjectId"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "update": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "mongoObjectId"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "class": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "mongoObjectId"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}

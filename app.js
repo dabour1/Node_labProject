@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
 const teacherRoute = require("./Routes/teacherRoutse");
 const childRouter = require("./Routes/childRouter");
@@ -15,7 +17,11 @@ const authenticationMW = require("./Midelwares/authenticationMW");
 const server = express();
 
 mongoose
-  .connect(process.env.DBCONNECTION)
+  .connect(
+
+    `mongodb+srv://aldabor8:${process.env.DBPASSWORD}@dabour.wtnwggo.mongodb.net/nurserySystem`
+
+  )
   .then(() => {
     console.log("DB Connected....");
     server.listen(process.env.PORT || 8080, () => {
@@ -30,6 +36,7 @@ mongoose
 server.use(morgan('dev'));
 server.use(cors());
 server.use(express.json());
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 server.use(loginRoute);
 server.use(changePasswordRouter);
