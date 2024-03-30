@@ -16,7 +16,7 @@ exports.changePassword = async (req, res, next) => {
     )
 
     if (change.modifiedCount) {
-      res.json({ Response: "Done" });
+      res.json({ state: "Done" });
     }
     else {
 
@@ -28,7 +28,7 @@ exports.changePassword = async (req, res, next) => {
       )
 
       if (change.modifiedCount) {
-        res.json({ Response: "Done" });
+        res.json({ state: "Done" });
       }
       else {
         next(Error("inserted email don't match any record"));

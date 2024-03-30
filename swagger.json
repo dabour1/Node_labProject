@@ -326,14 +326,23 @@
                     {
                         "name": "child",
                         "in": "formData",
-                        "description": "Child data",
+                        "description": "Child image",
                         "required": true,
                         "type": "file"
+                    },
+                    {
+                        "name": "child",
+                        "in": "body",
+                        "description": "Child data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ChildAdd"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Child created successfully",
+                        "description": "inserted",
                         "schema": {
                             "$ref": "#/definitions/Child"
                         }
@@ -358,13 +367,20 @@
                         "name": "child",
                         "in": "formData",
                         "description": "Updated child data",
-                        "required": true,
                         "type": "file"
+                    },
+                    {
+                        "name": "child",
+                        "in": "body",
+                        "description": "Child data",
+                        "schema": {
+                            "$ref": "#/definitions/ChildAdd"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Child updated successfully",
+                        "description": "updated",
                         "schema": {
                             "$ref": "#/definitions/Child"
                         }
@@ -394,7 +410,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
                         "schema": {
                             "$ref": "#/definitions/Child"
                         }
@@ -422,7 +437,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Child deleted successfully"
+                        "description": "deleted ",
+                        "schema": {
+                            "$ref": "#/definitions/Child"
+                        }
                     }
                 }
             }
@@ -441,7 +459,10 @@
                 "responses": {
                     "200": {
                         "schema": {
-                            "$ref": "#/definitions/class"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/class"
+                            }
                         }
                     }
                 }
@@ -617,6 +638,87 @@
                     }
                 }
             }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "name": "loginData",
+                        "in": "body",
+                        "description": "Login data",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Authenticated",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "state": {
+                                    "type": "string"
+                                },
+                                "token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Not Authenticated"
+                    }
+                }
+            }
+        },
+        "/changePassword": {
+            "patch": {
+                "tags": [
+                    "Password Management"
+                ],
+                "summary": "Change Password",
+                "parameters": [
+                    {
+                        "name": "changePasswordData",
+                        "in": "body",
+                        "description": "Change password data",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "newPassword": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "state": "Done"
+                    },
+                    "default": {
+                        "description": "Error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -760,6 +862,29 @@
                 },
                 "image": {
                     "type": "string"
+                }
+            }
+        },
+        "ChildAdd": {
+            "type": "object",
+            "required": [
+                "_id"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "fullname": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "address": {
+                    "$ref": "#/definitions/Address"
                 }
             }
         },

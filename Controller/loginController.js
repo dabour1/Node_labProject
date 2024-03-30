@@ -19,7 +19,7 @@ exports.login = async (req, res, next) => {
         },
         process.env.SECRET_KEY, { expiresIn: "1hr" }
       );
-      res.json({ data: "Authenticated", token });
+      res.json({ state: "Authenticated", token });
     }
   }
   else {
@@ -36,7 +36,7 @@ exports.login = async (req, res, next) => {
           },
           process.env.SECRET_KEY, { expiresIn: "1hr" }
         );
-        res.json({ data: "Authenticated", token });
+        res.json({ state: "Authenticated", token });
       }
     }
     else {
