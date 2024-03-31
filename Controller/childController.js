@@ -1,5 +1,5 @@
 const childSchema = require("./../Model/childSchema");
-const addImageToDataBase = require("./addImagesjs");
+const classSchema = require("./../Model/classSchema");
 const addImage = require("./addImagesjs");
 const _path = require('path')
 
@@ -46,8 +46,12 @@ exports.updateChild = (req, res, next) => {
 
 };
 exports.deleteChildById = (req, res, next) => {
-  childSchema.findByIdAndDelete(req.params._id).then(data => {
-    res.status(200).json({ message: 'deleted', data })
-  })
+  childSchema.findByIdAndDelete(req.params._id)
+    .then(childData => {
+      classSchema.updateOne({ children: req.params._id }, { $pull: { children: req.params._id } })
+        .then(data => {
+          res.status(200).json({ message: 'deleted', childData })
+        })
+    })
     .catch(error => next(error))
 };

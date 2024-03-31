@@ -19,8 +19,8 @@ const server = express();
 mongoose
   .connect(
 
-    `mongodb+srv://aldabor8:${process.env.DBPASSWORD}@dabour.wtnwggo.mongodb.net/nurserySystem`
-
+    // `mongodb+srv://aldabor8:${process.env.DBPASSWORD}@dabour.wtnwggo.mongodb.net/nurserySystem`
+    `mongodb://localhost:27017/ITISystem`
   )
   .then(() => {
     console.log("DB Connected....");

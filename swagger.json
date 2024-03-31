@@ -223,7 +223,13 @@
                 "summary": "Get all supervisors",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/supervisors"
+                            }
+                        }
                     }
                 }
             }
@@ -607,7 +613,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/childrenClassInfo"
+                            }
+                        }
                     }
                 }
             }
@@ -634,7 +646,12 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/supervisorClassInfo"
+                            }
+                        }
                     }
                 }
             }
@@ -953,6 +970,93 @@
                     "items": {
                         "type": "number"
                     }
+                }
+            }
+        },
+        "supervisors": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "mongoObjectId"
+                        },
+                        "fullname": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "childrenClassInfo": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "mongoObjectId"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "mongoObjectId"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "number"
+                            },
+                            "fullname": {
+                                "type": "string"
+                            },
+                            "age": {
+                                "type": "number"
+                            },
+                            "level": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "object",
+                                "$ref": "#/definitions/Address"
+                            },
+                            "__v": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "supervisorClassInfo": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "supervisor": {
+                    "type": "object",
+                    "$ref": "#/definitions/Teacher"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "__v": {
+                    "type": "number"
                 }
             }
         }
