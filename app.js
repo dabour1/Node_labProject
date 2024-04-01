@@ -19,13 +19,14 @@ const server = express();
 mongoose
   .connect(
 
-    // `mongodb+srv://aldabor8:${process.env.DBPASSWORD}@dabour.wtnwggo.mongodb.net/nurserySystem`
-    `mongodb://localhost:27017/ITISystem`
+    `mongodb+srv://aldabor8:${process.env.DBPASSWORD}@dabour.wtnwggo.mongodb.net/nurserySystem`
+
   )
   .then(() => {
     console.log("DB Connected....");
-    server.listen(process.env.PORT || 8080, () => {
-      console.log("I am listening..........");
+    let port = process.env.PORT || 8080
+    server.listen(port, () => {
+      console.log("I am listening..........", port);
     });
   })
   .catch((error) => {
