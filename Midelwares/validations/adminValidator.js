@@ -21,7 +21,7 @@ exports.insertValidator = [
       const adminObjects = await adminSchema.find({ email: value });
       const teacherObjects = await teacherSchema.find({ email: value });
       if (adminObjects.length > 0 || teacherObjects.length > 0) {
-        return Promise.reject("Email already exists");
+        return Promise.reject("This email already exists");
       }
 
       return true;

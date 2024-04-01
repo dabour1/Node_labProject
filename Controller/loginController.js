@@ -5,10 +5,12 @@ const jwt = require("jsonwebtoken");
 
 
 
-/* admin data for frist login 
+
+
+/* admin data for frist login  
 { 
-   "email":"aldabour8@gmail.com"
-   "password":"1234567",
+   "email":"aldabour8@gmail.com",
+   "password":"1234567"
 }
    */
 
