@@ -10,13 +10,6 @@
     "schemes": [
         "http"
     ],
-    "securityDefinitions": {
-        "BearerAuth": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
-        }
-    },
     "paths": {
         "/admins": {
             "get": {
