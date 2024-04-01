@@ -3,6 +3,15 @@ const adminSchema = require("../Model/adminSchema");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
+
+
+/* admin data for frist login 
+{ 
+   "email":"aldabour8@gmail.com"
+   "password":"1234567",
+}
+   */
+
 exports.login = async (req, res, next) => {
 
   let user = await teacherSchema.findOne({
